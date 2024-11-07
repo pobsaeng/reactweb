@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';        
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import About from './components/About';
+import LoginForm from './components/LoginForm';
+import PosIndex from './features/pos/components/PosIndex';
+import ProductIndex from './features/products/components/ProductIndex';
+import ProtectedRoute from './utils/ProtectedRoute';
+import CartIndex from './features/carts/CartIndex';
+import "./index.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar/>
+      <Routes>
+        <Route path="/" element={<Home />}/>
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/shopping" element={<CartIndex />} />
+        <Route path="/product" element={
+          <ProtectedRoute>
+            <ProductIndex />
+          </ProtectedRoute>} />
+        <Route path="/pos" element={
+          <ProtectedRoute>
+            <PosIndex />
+          </ProtectedRoute>} />
+      </Routes>
+    </Router>
   );
 }
-
 export default App;
+
+
